@@ -1,4 +1,4 @@
-//接口(interface)demo1
+//接口(interface 上)demo1
 interface labelVal{
     label:string,
     size:number,
@@ -99,7 +99,7 @@ console.log('demo8=>',sumNum(-4,-12));
 
 
 
-//demo9     可索引的类型
+//demo9     可索引的类型 数值型的字符串索引
 interface StringArray {
     // [index: number]: string;
     readonly [index: number]: string;
