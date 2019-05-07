@@ -1,0 +1,13 @@
+{
+    "name": "typescript",
+    "version": "1.0.0",
+    "description": "",
+    "main": "lesson10.js",
+    "scripts": {
+      "start": "tsc lesson10.ts && node lesson10.js"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {}
+}
+  
