@@ -31,13 +31,55 @@ fn2 = fn1; // OK
 
 
 //demo3  可选参数及剩余参数
+let args = [1,2];
 function invokeLater(args: any[], callback: (...args: any[]) => void) {
     /* ... Invoke callback with 'args' ... */
     callback();
 }
 
 // Unsound - invokeLater "might" provide any number of arguments
-invokeLater([1, 2], (x=0, y=10) => console.log(x + ', ' + y));
+invokeLater(args, (x=args[0], y=args[1]) => console.log('demo3  ',x + ', ' + y));
 
 // Confusing (x and y are actually required) and undiscoverable
-invokeLater([1, 2], (x?, y?) => console.log(x + ', ' + y));
+invokeLater(args, (x=args[1], y?) => console.log('demo3   可选参数',x + ', ' + y));
+
+
+
+// demo4 枚举类型与数字类型兼容，并且数字类型与枚举类型兼容。不同枚举类型之间是不兼容的。比如，
+
+enum Status { Ready, Waiting };
+enum Color { Red, Blue, Green };
+
+let status1 = Status.Ready;
+//status1 = Color.Green;   Error
+console.log('demo4    不同枚举类型之间不兼容的',status1)
+
+
+
+//demo5 类与对象字面量和接口差不多，但有一点不同：类有静态部分和实例部分的类型。 比较两个类类型的对象时，只有实例的成员会被比较。
+// ************   静态成员和构造函数不在比较的范围内   ************
+class Animal {
+    feet: number;
+    constructor(name: string, numFeet: number) { }
+}
+
+class Size {
+    feet: number;
+    constructor(numFeet: number) { }
+}
+
+let a: Animal;
+let s: Size;
+
+a = s;  // OK
+s = a;  // OK
+
+
+
+//demo6 泛型
+interface NotEmpty<T> {
+    data: T;
+}
+let x: NotEmpty<number>;
+let y: NotEmpty<string>;
+// x = y   Error  因为接口中的数据类型不同， 如果data改为固定的类型则可以执行x=y的操作；

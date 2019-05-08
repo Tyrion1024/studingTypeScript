@@ -17,15 +17,55 @@ fn2 = fn1; // OK
 第二个赋值错误，因为fn2有个必需的第二个参数，但是fn1并没有，所以不允许赋值。
 */
 //demo3  可选参数及剩余参数
+var args = [1, 2];
 function invokeLater(args, callback) {
     /* ... Invoke callback with 'args' ... */
     callback();
 }
 // Unsound - invokeLater "might" provide any number of arguments
-invokeLater([1, 2], function (x, y) {
-    if (x === void 0) { x = 0; }
-    if (y === void 0) { y = 10; }
-    return console.log(x + ', ' + y);
+invokeLater(args, function (x, y) {
+    if (x === void 0) { x = args[0]; }
+    if (y === void 0) { y = args[1]; }
+    return console.log('demo3  ', x + ', ' + y);
 });
 // Confusing (x and y are actually required) and undiscoverable
-invokeLater([1, 2], function (x, y) { return console.log(x + ', ' + y); });
+invokeLater(args, function (x, y) {
+    if (x === void 0) { x = args[1]; }
+    return console.log('demo3   可选参数', x + ', ' + y);
+});
+// demo4 枚举类型与数字类型兼容，并且数字类型与枚举类型兼容。不同枚举类型之间是不兼容的。比如，
+var Status;
+(function (Status) {
+    Status[Status["Ready"] = 0] = "Ready";
+    Status[Status["Waiting"] = 1] = "Waiting";
+})(Status || (Status = {}));
+;
+var Color;
+(function (Color) {
+    Color[Color["Red"] = 0] = "Red";
+    Color[Color["Blue"] = 1] = "Blue";
+    Color[Color["Green"] = 2] = "Green";
+})(Color || (Color = {}));
+;
+var status1 = Status.Ready;
+//status1 = Color.Green;   Error
+console.log('demo4    不同枚举类型之间不兼容的', status1);
+//demo5 类与对象字面量和接口差不多，但有一点不同：类有静态部分和实例部分的类型。 比较两个类类型的对象时，只有实例的成员会被比较。
+// ************   静态成员和构造函数不在比较的范围内   ************
+var Animal = /** @class */ (function () {
+    function Animal(name, numFeet) {
+    }
+    return Animal;
+}());
+var Size = /** @class */ (function () {
+    function Size(numFeet) {
+    }
+    return Size;
+}());
+var a;
+var s;
+a = s; // OK
+s = a; // OK
+var x;
+var y;
+// x = y   Error  因为接口中的数据类型不同， 如果data改为固定的类型则可以执行x=y的操作；
