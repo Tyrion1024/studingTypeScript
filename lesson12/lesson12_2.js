@@ -64,3 +64,15 @@ function unProxy(o) {
 }
 var _student = unProxy(student);
 console.log(_student);
+function f1(s) {
+    return { a: 1, b: s };
+}
+var C = /** @class */ (function () {
+    function C() {
+        this.x = 0;
+        this.y = 0;
+    }
+    return C;
+}());
+// type T23 = InstanceType<string>;   Error
+// type T24 = InstanceType<Function>;   Error

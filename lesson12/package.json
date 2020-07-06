@@ -4,7 +4,7 @@
     "description": "",
     "main": "lesson12_2.js",
     "scripts": {
-      "start": "tsc lesson12_2.ts && node lesson12_2.js"
+      "start": "tsc lesson12_1.ts && node lesson12_1.js"
     },
     "author": "",
     "license": "ISC",
