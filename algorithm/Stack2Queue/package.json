@@ -1,0 +1,12 @@
+{
+  "name": "typescript",
+  "version": "1.0.0",
+  "description": "",
+  "main": "Stack2Queue.js",
+  "scripts": {
+    "start": "tsc Stack2Queue.ts && node Stack2Queue.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {}
+}
